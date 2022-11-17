@@ -90,7 +90,7 @@
           <p th:text="${pizzaOrder.getStatus().getName()}"></p>
         </td>
         <td sec:authorize="hasAuthority('Повар')" th:if="${pizzaOrder.getStatus().getName().equals('У черзі')}">
-          <a th:href="@{/orders/startPrepare?id={id}(id=${pizzaOrder.getId()})}" style="color: green">Почати готовати</a>
+          <a th:href="@{/orders/startPrepare?id={id}(id=${pizzaOrder.getId()})}" style="color: green">Почати готувати</a>
         </td>
         <td sec:authorize="hasAuthority('Повар')" th:if="${pizzaOrder.getStatus().getName().equals('Готується')}">
           <a th:href="@{/orders/finishPrepare?id={id}(id=${pizzaOrder.getId()})}" style="color: green">Завершити приготування</a>
