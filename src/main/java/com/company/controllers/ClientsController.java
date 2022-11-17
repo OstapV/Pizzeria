@@ -27,7 +27,7 @@ public class ClientsController {
     @GetMapping("/clients")
     public String myPage(Model model){
         model.addAttribute("employees",userService.findAll().stream().filter(x->x.getRole().getName().equals("Клієнт")).collect(Collectors.toList()));
-        return "clients/index";
+        return  "clients/index";
     }
 
     @GetMapping("/clients/stop")
