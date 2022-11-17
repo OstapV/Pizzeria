@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+    <title>Інформація про користувача</title>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header">...</div>
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="page-content page-container" id="page-content">
+        <div class="padding">
+            <div class="row container d-flex justify-content-center">
+                <div class="col-xl-6 col-md-12">
+                    <div class="card user-card-full">
+                        <div class="row m-l-0 m-r-0">
+                            <div class="col-sm-4 bg-c-lite-green user-profile">
+                                <div class="card-block text-center text-white">
+                                    <div class="m-b-25"> <img th:src="@{${user.getAvatarUrl()}}" class="img-radius" width="300px" alt="User-Profile-Image"> </div>
+                                    <h6 class="f-w-600" th:text="${user.getFirstName() + ' ' + user.getLastName()}"></h6>
+                                    <p th:text="${user.getRole().getName()}"></p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="card-block">
+                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Информация</h6>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Email</p>
+                                            <h6 class="text-muted f-w-400" th:text="${user.getEmail()}"></h6>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                    </div>
+                                </div>
+                                <div th:if="${myPage}" class="row" >
+                                    <div class="col-sm-6">
+                                        <form th:action="@{/users/edit}" method="get">
+                                            <input type="number" name="id" th:value="${user.getId()}" hidden>
+                                            <input type="submit" class="form-control btn btn-info" value="Змінити" />
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h1>
+        Замовлення
+    </h1>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Дата замовлення
+            </th>
+            <th>
+                Статус
+            </th>
+            <th>
+                Операції
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${user.getOrders()}">
+            <td>
+                <p th:text="${order.getId()}"></p>
+            </td>
+            <td>
+                <p th:text="${order.getOrderDate()}"></p>
+            </td>
+            <td>
+                <p th:text="${order.getStatus().getName()}"></p>
+            </td>
+            <td>
+                <a th:href="@{/orders/details?id={id}(id=${order.getId()})}">Інформація</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>

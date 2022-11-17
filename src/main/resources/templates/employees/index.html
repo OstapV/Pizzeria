@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Index</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">...</div>
+<br>
+<br>
+<br>
+
+<div class="container">
+    <main role="main" class="pb-3">
+        <p>
+            <a href="users/create">Додати нового користувача</a>
+        </p>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>
+                    Аватарка
+                </th>
+                <th>
+                    Ім'я Прізвище
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Роль
+                </th>
+                <th>
+                    Статус
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="employee : ${employees}">
+                <td>
+                    <img th:src="${employee.getAvatarUrl()}" alt="avatar" width="150px;"/>
+                </td>
+                <td>
+                    <a th:href="@{/users/details?id={id}(id=${employee.getId()})}" th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}"></a>
+                </td>
+                <td>
+                    <p th:text="${employee.getEmail()}"></p>
+                </td>
+                <td>
+                    <p th:text="${employee.getRole().getName()}"></p>
+                </td>
+                <td>
+                    <p th:text="${employee.getStatus().getName()}"></p>
+                </td>
+                <td>
+                    <a th:href="@{/users/edit?id={id}(id=${employee.getId()})}">Редагувати</a>
+                    <div th:if="${employee.getStatus().getName().equals('Вільний')}">
+                        <a th:href="@{/employees/stop?id={id}(id=${employee.getId()})}" style="color: red">Зупинити</a>
+                    </div>
+                    <div th:if="${employee.getStatus().getName().equals('Зупинений')}">
+                        <a th:href="@{/employees/start?id={id}(id=${employee.getId()})}" style="color: green">Повернути на роботу</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+
+
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>

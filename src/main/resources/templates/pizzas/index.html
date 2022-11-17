@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Index</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">...</div>
+<br>
+<br>
+<br>
+
+<div class="container">
+    <main role="main" class="pb-3">
+        <p sec:authorize="hasAuthority('Адміністратор')">
+            <a th:href="@{/pizzas/create}">Додати піцу</a>
+        </p>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>
+                    Аватарка
+                </th>
+                <th>
+                    Назва
+                </th>
+                <th>
+                    Опис
+                </th>
+                <th>
+                    Ціна
+                </th>
+                <th>
+                    Вага
+                </th>
+                <th>
+                    Час приготування (хв)
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pizza : ${pizzas}">
+                <td>
+                    <img th:src="${pizza.getAvatarUrl()}" alt="avatar" width="150px;"/>
+                </td>
+                <td>
+                    <a th:href="@{/pizzas/details?id={id}(id=${pizza.getId()})}" th:text="${pizza.getName()}"></a>
+                </td>
+                <td>
+                    <p th:text="${pizza.getDescription()}"></p>
+                </td>
+                <td>
+                    <p th:text="${pizza.getPrice()}"></p>
+                </td>
+                <td>
+                    <p th:text="${pizza.getMassa()}"></p>
+                </td>
+                <td>
+                    <p th:text="${pizza.getCookingTime()}"></p>
+                </td>
+                <td>
+                    <a sec:authorize="hasAuthority('Адміністратор')" th:href="@{/pizzas/edit?id={id}(id=${pizza.getId()})}">Редагувати</a>
+                    <a th:href="@{/orders/addToBucket?id={id}(id=${pizza.getId()})}" style="color: green">Додати у кошик</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+
+
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>

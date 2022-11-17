@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Замовлення</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">...</div>
+<br>
+<br>
+<br>
+
+<div class="container">
+    <main role="main" class="pb-3">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Клієнт
+                </th>
+                <th>
+                    Дата замовлення
+                </th>
+                <th>
+                    Статус
+                </th>
+                <th>
+                    Операції
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+                <td>
+                    <p th:text="${order.getId()}"></p>
+                </td>
+                <td>
+                    <p th:text="${order.getUser().getFirstName()} + ' ' + ${order.getUser().getLastName()}"></p>
+                </td>
+                <td>
+                    <p th:text="${order.getOrderDate()}"></p>
+                </td>
+                <td>
+                    <p th:text="${order.getStatus().getName()}"></p>
+                </td>
+                <td>
+                    <a th:href="@{/orders/details?id={id}(id=${order.getId()})}">Інформація</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+
+
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>

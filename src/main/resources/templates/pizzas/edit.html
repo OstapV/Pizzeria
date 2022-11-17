@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <title>Додати піцу</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">...</div>
+<br>
+<br>
+<br>
+<div class="container">
+  <main role="main" class="pb-3">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <h1>Додавання піци</h1>
+        <br>
+        <br>
+        <form th:action="@{/pizzas/edit}" method="post">
+          <div class="form-group" hidden>
+            <label for="id">Назва</label>: <input type="number" id="id" name="id" class="form-control" autofocus="autofocus" placeholder="Назва" th:value="${pizza.getId()}" required/>
+          </div>
+          <div class="form-group">
+            <label for="name">Назва</label>: <input th:value="${pizza.getName()}" type="text" id="name" name="name" class="form-control" autofocus="autofocus" placeholder="Назва" required/>
+          </div>
+          <div class="form-group">
+            <label for="description">Опис</label>: <input th:value="${pizza.getDescription()}" type="text" id="description" name="description" class="form-control" autofocus="autofocus" placeholder="Опис" required/>
+          </div>
+          <div class="form-group">
+            <label for="price">Ціна</label>: <input th:value="${pizza.getPrice()}" type="number" id="price" name="price" class="form-control" autofocus="autofocus" placeholder="Ціна" required/>
+          </div>
+          <div class="form-group">
+            <label for="massa">Вага</label>: <input th:value="${pizza.getMassa()}" type="number" id="massa" name="massa" class="form-control" autofocus="autofocus" placeholder="Маса" required/>
+          </div>
+          <div class="form-group">
+            <label for="cookingTime">Час приготування (хв)</label>: <input th:value="${pizza.getCookingTime()}" type="number" id="cookingTime" name="cookingTime" class="form-control" autofocus="autofocus" placeholder="Час приготування" required/>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-success">Редагувати</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Замовлення</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">...</div>
+<br>
+<br>
+<br>
+
+<div class="container">
+    <main role="main" class="pb-3">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>
+                    Зображення
+                </th>
+                <th>
+                    Піца
+                </th>
+                <th>
+                    Кількість
+                </th>
+                <th>
+                    Дата
+                </th>
+                <th>
+                    Статус
+                </th>
+                <th>
+                    Операції
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pizzaOrder : ${pizzaOrders}">
+                <td>
+                    <img th:src="${pizzaOrder.getPizza().getAvatarUrl()}" alt="avatar" width="150px;"/>
+                </td>
+                <td>
+                    <p th:text="${pizzaOrder.getPizza().getName()}"></p>
+                </td>
+                <td>
+                    <p th:text="${pizzaOrder.getCount()}"></p>
+                </td>
+                <td>
+                    <p th:text="${pizzaOrder.getAddingDate()}"></p>
+                </td>
+                <td>
+                    <p th:text="${pizzaOrder.getStatus().getName()}"></p>
+                </td>
+                <td>
+                    <a th:href="@{/orders/deleteFromBucket?id={id}(id=${pizzaOrder.getId()})}" style="color: red">Видалити з кошика</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div th:if="${pizzaOrders.size()!=0}">
+            <a th:href="@{/orders/start}" style="color: green">Оформити замовлення</a>
+        </div>
+    </main>
+</div>
+
+
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редагування користувача</title>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+    </head>
+<body>
+<div class="container">
+    <div th:replace="fragments/header :: header">...</div>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="page-content page-container" id="page-content">
+            <div class="padding">
+                <div class="row container d-flex justify-content-center">
+                    <div class="col-xl-6 col-md-12">
+                        <div class="card user-card-full">
+                            <div class="row m-l-0 m-r-0">
+                                <div class="col-sm-4 bg-c-lite-green user-profile">
+                                    <div class="card-block text-center text-white">
+                                        <div class="m-b-25"> <img th:src="@{${user.getAvatarUrl()}}" class="img-radius" alt="User-Profile-Image" width="300px"> </div>
+                                        <h6 class="f-w-600" th:text="${user.getFirstName()  + ' ' + user.getLastName()}"></h6>
+                                        <p th:text="${user.getRole().getName()}"></p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                        <div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="card-block">
+                                        <h3 class="m-b-20 p-b-5 b-b-default f-w-600">Інформація</h3>
+                                        <form th:action="@{/users/edit}" method="post">
+                                            <input type="number" name="id" th:value="${user.getId()}" hidden>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <label for="firstName">Ім'я</label>: <input th:value="${user.getFirstName()}" type="text" id="firstName" name="firstName" class="form-control" placeholder="Ім'я" required/>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label for="lastName">Прізвище</label>: <input th:value="${user.getLastName()}" type="text" id="lastName" name="lastName" class="form-control" placeholder="Прізвище" required/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <label for="email">Email</label>: <input th:value="${user.getEmail()}" type="email" id="email" name="email" class="form-control" placeholder="Email" required/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <button type="submit" class="btn btn-success">Редагувати</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>
