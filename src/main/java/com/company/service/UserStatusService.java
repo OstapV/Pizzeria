@@ -9,8 +9,13 @@ import java.util.List;
 
 @Service
 public class UserStatusService {
+
+    private final UserStatusRepository userStatusRepository;
     @Autowired
-    UserStatusRepository userStatusRepository;
+    public UserStatusService(UserStatusRepository userStatusRepository) {
+        this.userStatusRepository = userStatusRepository;
+    }
+
     public List<UserStatus> findAll() {return userStatusRepository.findAll();}
     public UserStatus getById(Long id) {return userStatusRepository.getById(id);}
     public UserStatus getByName(String name) {return userStatusRepository.findByName(name);}

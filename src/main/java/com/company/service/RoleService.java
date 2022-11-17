@@ -8,8 +8,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class RoleService {
+
+    private final RoleRepository roleRepository;
     @Autowired
-    RoleRepository roleRepository;
+    public RoleService(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
+
     public List<Role> findAll() {return roleRepository.findAll();}
     public Role getById(Long id) {return roleRepository.getById(id);}
     public Role getByName(String name) {return roleRepository.findByName(name);}

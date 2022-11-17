@@ -12,23 +12,35 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Controller
 public class OrdersController {
-    @Autowired
-    UserService userService;
-    @Autowired
-    OrderService orderService;
-    @Autowired
-    PizzaOrderService pizzaOrderService;
-    @Autowired
-    PizzaService pizzaService;
-    @Autowired
-    OrderStatusService orderStatusService;
+
+    private final UserService userService;
+
+    private final OrderService orderService;
+
+    private final PizzaOrderService pizzaOrderService;
+
+    private final PizzaService pizzaService;
+
+    private final OrderStatusService orderStatusService;
+
+    private final PizzaOrderStatusService pizzaOrderStatusService;
 
     @Autowired
-    PizzaOrderStatusService pizzaOrderStatusService;
+    public OrdersController(UserService userService, OrderService orderService, PizzaOrderService pizzaOrderService,
+                            PizzaService pizzaService, OrderStatusService orderStatusService,
+                            PizzaOrderStatusService pizzaOrderStatusService) {
+        this.userService = userService;
+        this.orderService = orderService;
+        this.pizzaOrderService = pizzaOrderService;
+        this.pizzaService = pizzaService;
+        this.orderStatusService = orderStatusService;
+        this.pizzaOrderStatusService = pizzaOrderStatusService;
+    }
 
     @GetMapping("/orders")
     public String orders(Model model){
@@ -99,7 +111,7 @@ public class OrdersController {
 
         }
 
-        model.addAttribute("pizzas",pizzaService.findAll().stream().toArray());
+        model.addAttribute("pizzas", pizzaService.findAll().toArray());
 
         return "pizzas/index";
     }
@@ -127,7 +139,7 @@ public class OrdersController {
         Order order = orderService.getById(orders.get(0).getId());
         order.setStatus(orderStatusService.getByName("Відкрите"));
         orderService.save(order);
-        model.addAttribute("pizzas",pizzaService.findAll().stream().toArray());
+        model.addAttribute("pizzas", pizzaService.findAll().toArray());
         return "pizzas/index";
     }
 
@@ -157,8 +169,8 @@ public class OrdersController {
         pizzaOrder.setStatus(pizzaOrderStatusService.getByName("Готова"));
         pizzaOrderService.save(pizzaOrder);
 
-        List<PizzaOrder> pizzaOrders = pizzaOrderService.findAll().stream().filter(x->x.getOrder().getId() == pizzaOrder.getOrder().getId()).collect(Collectors.toList());
-        List<PizzaOrder> pizzaOrdersReady = pizzaOrderService.findAll().stream().filter(x->x.getOrder().getId() == pizzaOrder.getOrder().getId() && x.getStatus().getName().equals("Готова")).collect(Collectors.toList());
+        List<PizzaOrder> pizzaOrders = pizzaOrderService.findAll().stream().filter(x-> Objects.equals(x.getOrder().getId(), pizzaOrder.getOrder().getId())).collect(Collectors.toList());
+        List<PizzaOrder> pizzaOrdersReady = pizzaOrderService.findAll().stream().filter(x-> Objects.equals(x.getOrder().getId(), pizzaOrder.getOrder().getId()) && x.getStatus().getName().equals("Готова")).collect(Collectors.toList());
 
         if(pizzaOrders.size() == pizzaOrdersReady.size()){
             Order order = orderService.getById(pizzaOrder.getOrder().getId());

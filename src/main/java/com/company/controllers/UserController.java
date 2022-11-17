@@ -15,16 +15,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
+
+    private final UserService userService;
+
+    private final RoleService roleService;
+
+    private final UserStatusService userStatusService;
+
     @Autowired
-    UserService userService;
-    @Autowired
-    RoleService roleService;
-    @Autowired
-    UserStatusService userStatusService;
+    public UserController(UserService userService, RoleService roleService, UserStatusService userStatusService) {
+        this.userService = userService;
+        this.roleService = roleService;
+        this.userStatusService = userStatusService;
+    }
 
     @GetMapping("/myPage")
     public String myPage(Model model){
-        model.addAttribute("roles",roleService.findAll().stream().toArray());
+        model.addAttribute("roles", roleService.findAll().toArray());
         model.addAttribute("user",userService.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()));
         model.addAttribute("myPage",true);
         return "users/details";

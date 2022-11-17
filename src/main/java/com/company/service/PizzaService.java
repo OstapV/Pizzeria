@@ -9,8 +9,13 @@ import java.util.List;
 
 @Service
 public class PizzaService {
+
+    private final PizzaRepository pizzaRepository;
     @Autowired
-    PizzaRepository pizzaRepository;
+    public PizzaService(PizzaRepository pizzaRepository) {
+        this.pizzaRepository = pizzaRepository;
+    }
+
     public List<Pizza> findAll() {return pizzaRepository.findAll();}
     public Pizza getById(Long id) {return pizzaRepository.getById(id);}
     public void save(Pizza order) {pizzaRepository.save(order);}

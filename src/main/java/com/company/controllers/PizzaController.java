@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PizzaController {
+    private final PizzaService pizzaService;
+
     @Autowired
-    PizzaService pizzaService;
+    public PizzaController(PizzaService pizzaService) {
+        this.pizzaService = pizzaService;
+    }
 
     @GetMapping("/pizzas")
     public String index(Model model){
-        model.addAttribute("pizzas",pizzaService.findAll().stream().toArray());
+        model.addAttribute("pizzas", pizzaService.findAll().toArray());
         return "pizzas/index";
     }
 
@@ -27,7 +31,7 @@ public class PizzaController {
     }
 
     @GetMapping("/pizzas/create")
-    public String details(Model model){
+    public String details(){
         return "pizzas/create";
     }
 

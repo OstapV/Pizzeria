@@ -2,7 +2,6 @@ package com.company.controllers;
 
 
 import com.company.models.User;
-import com.company.service.RoleService;
 import com.company.service.UserService;
 import com.company.service.UserStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,16 @@ import java.util.stream.Collectors;
 
 @Controller
 public class EmployeeController {
+
+
+    private final UserService userService;
+    private final UserStatusService userStatusService;
+
     @Autowired
-    UserService userService;
-    @Autowired
-    RoleService roleService;
-    @Autowired
-    UserStatusService userStatusService;
+    public EmployeeController(UserService userService, UserStatusService userStatusService) {
+        this.userService = userService;
+        this.userStatusService = userStatusService;
+    }
 
     @GetMapping("/employees")
     public String myPage(Model model){

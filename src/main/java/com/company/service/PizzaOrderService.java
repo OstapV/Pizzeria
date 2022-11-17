@@ -8,8 +8,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class PizzaOrderService {
+
+    private final PizzaOrderRepository pizzaOrderRepository;
     @Autowired
-    PizzaOrderRepository pizzaOrderRepository;
+    public PizzaOrderService(PizzaOrderRepository pizzaOrderRepository) {
+        this.pizzaOrderRepository = pizzaOrderRepository;
+    }
+
     public List<PizzaOrder> findAll() {return pizzaOrderRepository.findAll();}
     public PizzaOrder getById(Long id) {return pizzaOrderRepository.getById(id);}
     public void save(PizzaOrder pizzaOrder) {pizzaOrderRepository.save(pizzaOrder);}

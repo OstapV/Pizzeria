@@ -9,8 +9,12 @@ import java.util.List;
 
 @Service
 public class PizzaOrderStatusService {
+    private final PizzaOrderStatusRepository pizzaOrderStatusRepository;
     @Autowired
-    PizzaOrderStatusRepository pizzaOrderStatusRepository;
+    public PizzaOrderStatusService(PizzaOrderStatusRepository pizzaOrderStatusRepository) {
+        this.pizzaOrderStatusRepository = pizzaOrderStatusRepository;
+    }
+
     public List<PizzaOrderStatus> findAll() {return pizzaOrderStatusRepository.findAll();}
     public PizzaOrderStatus getById(Long id) {return pizzaOrderStatusRepository.getById(id);}
     public PizzaOrderStatus getByName(String name) {return pizzaOrderStatusRepository.findByName(name);}

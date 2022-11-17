@@ -16,12 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("register")
 public class RegisterController {
+
+    private final UserService userService;
+    private final RoleService roleService;
+    private final UserStatusService userStatusService;
     @Autowired
-    UserService userService;
-    @Autowired
-    RoleService roleService;
-    @Autowired
-    UserStatusService userStatusService;
+    public RegisterController(UserService userService, RoleService roleService, UserStatusService userStatusService) {
+        this.userService = userService;
+        this.roleService = roleService;
+        this.userStatusService = userStatusService;
+    }
 
     @GetMapping
     public String register(Model model){

@@ -12,11 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
-    @Autowired
-    UserService userService;
+
+    private final UserService userService;
+    private final PizzaService pizzaService;
+
 
     @Autowired
-    PizzaService pizzaService;
+    public MainController(UserService userService, PizzaService pizzaService) {
+        this.userService = userService;
+        this.pizzaService = pizzaService;
+    }
 
     @GetMapping("/")
     public String root(Model model) {
@@ -25,7 +30,7 @@ public class MainController {
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
+    public String login() {
         return "login";
     }
 
