@@ -20,7 +20,7 @@
             <h1>Авторизація</h1>
             <form th:action="@{/login}" method="post">
                 <div th:if="${param.error}">
-                    <div class="alert alert-danger">Не правильне имя користувача/пароль.
+                    <div class="alert alert-danger">Не правильне ім'я користувача/пароль.
                     </div>
                 </div>
                 <div th:if="${param.logout}">
